@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <SearchProvider>
         <Routes>
-          <Route path="/*" element={<App />} />
+          <Route path="/StuckOverBug/*" element={<App />} />
         </Routes>
       </SearchProvider>
     </AuthProvider>

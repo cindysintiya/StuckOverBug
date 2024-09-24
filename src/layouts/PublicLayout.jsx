@@ -11,6 +11,8 @@ import { FcSearch } from "react-icons/fc";
 import { GoHome } from "react-icons/go";
 import ProfileModal from "../components/modals/Profile";
 
+import { baseUrl } from "../utils/format";
+
 const PublicLayout = () => {
   const { isLogin, loginData } = useContext(AuthContext);
   const logout = useLogout();
@@ -20,16 +22,16 @@ const PublicLayout = () => {
   const url = useLocation();
 
   useEffect(() => {
-    setShowSearch(url.pathname == "/");
+    setShowSearch(url.pathname == "/StuckOverBug/");
   }, [url.pathname]);
 
   return <>
-    <div className="d-flex flex-column">
+    <div className="d-flex flex-column justify-content-between" style={{minHeight: window.innerHeight}}>
       <header className="fixed-top">
         <nav className="navbar navbar-expand-lg navbar-dar bg-blac navbar-trans bg-light shadow shadow-sm rounded-bottom p-1 px-md-5">
           <div className="container-fluid mx-xl-5 px-xxl-5">
             <NavLink className="navbar-brand col-auto" to="/">
-              <img src="/assets/img/Bug3.jpeg" alt="Logo" className="rounded" width={45}/>
+              <img src="assets/img/Bug3.jpeg" alt="Logo" className="rounded" width={45}/>
               <span className="mx-1 text-decoration-underline fst-italic d-none d-sm-inline">StuckOverBug</span>
             </NavLink>
             {
@@ -43,7 +45,7 @@ const PublicLayout = () => {
                 </>
               ) : (
                 <>
-                  <NavLink className="nav-link text-primar text-center align-items-center" to="/" aria-current="page">
+                  <NavLink className="nav-link text-primar text-center align-items-center" to={`${baseUrl}/`} aria-current="page">
                     <GoHome size={30} /> 
                     <p className="small m-0">Go to Home</p>
                   </NavLink>
@@ -72,10 +74,10 @@ const PublicLayout = () => {
                   </>
                 ) : (
                   <>
-                    <NavLink className="btn btn-success" to="/auth/login">
+                    <NavLink className="btn btn-success" to={`${baseUrl}/auth/login`}>
                       LOGIN
                     </NavLink>
-                    <NavLink className="btn btn-outline-success d-md-block d-none" to="/auth/register">
+                    <NavLink className="btn btn-outline-success d-md-block d-none" to={`${baseUrl}/auth/register`}>
                       SIGN UP
                     </NavLink>
                   </>
@@ -87,11 +89,11 @@ const PublicLayout = () => {
       </header>
       { isLogin? <ProfileModal /> : <></> }
 
-      <main style={{ marginTop: 65 }}>
+      <main style={{ marginTop: 65 }} className="flex-fil">
         <Outlet />
       </main>
 
-      <footer className="mt-auto p-2 bg-black text-light text-center">
+      <footer className="p-2 bg-black text-light text-center flex-fill">
         Copyright &copy; 2024 by (AB)CDEF. All Right Reserved.
       </footer>
     </div>

@@ -1,10 +1,12 @@
+import { baseUrl } from "./format";
+
 let users = [
   {
     id: 0,
     username: "sobug",
     password: "molla",
     realname: "Stuck Over Bug",
-    profile: "/assets/img/Bug3.jpeg",
+    profile: `${baseUrl}/assets/img/Bug3.jpeg`,
     email: "stuck@over.bug",
     active: 1,
   },
@@ -13,7 +15,7 @@ let users = [
     username: "ask_sob",
     password: "buzidao",
     realname: "Ask Over Bug",
-    profile: "/assets/img/Bug1.jpeg",
+    profile: `${baseUrl}/assets/img/Bug1.jpeg`,
     email: "ask@over.bug",
     active: 1,
   },
@@ -22,7 +24,7 @@ let users = [
     username: "who_am_1",
     password: "nuguseyoo",
     realname: "Secret Helper",
-    profile: "/assets/img/Bug5.jpeg",
+    profile: `${baseUrl}/assets/img/Bug5.jpeg`,
     email: "secret@helper.boom",
     active: 1,
   },

@@ -13,10 +13,10 @@ const App = () => {
     <Routes>
       <Route path="/" element={<PublicLayout />}>
         <Route index element={<Home />} />
-        <Route path="/thread/:id">
+        <Route path="thread/:id">
           <Route index element={<Welcome />} />
         </Route>
-        <Route path="/auth">
+        <Route path="auth">
           <Route index element={<Login />} />
           <Route path="login" element={<Login />} />
         </Route>
@@ -24,6 +24,8 @@ const App = () => {
           <Route index element={<Welcome />} />
         </Route> */}
       </Route>
+      
+      <Route path="*" element={<Welcome />} />
     </Routes>
   </>
 }

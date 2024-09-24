@@ -2,21 +2,10 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLogin, useLogout } from "../hooks/useAuth";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-// import useAuth from "../../hooks/useAuth";
 
 import Swal from "sweetalert2";
 import { findUser } from "../utils/DataUsers";
-// import { fireToast } from "../../components/ToastComp";
-// import LoadingFullScreen from "../../components/Loader/Loading";
-
-// import { CustomInputField, InputTextField } from "../../components/Field/InputWithLabel";
-// import ButtonBackHome from "../../components/Button/BackToHome";
-// import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-
-// import { userLogin } from "../../services/auth.service";
-// import { getAllowedRoutes } from "../../services/api.service";
-// import { io } from "socket.io-client";
-// import { socketNode } from "../../Utils/url";
+import { baseUrl } from "../utils/format";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -24,18 +13,12 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const nav = useNavigate();
 
   const logout = useLogout();
   const login = useLogin();
-
-  // const { auth, setAuth } = useAuth();
-
-  // const socket = io(socketNode, {
-  //   autoConnect: false,
-  // })
 
   useEffect(() => {
     // const uname_from_session = sessionStorage.getItem("uname");
@@ -54,7 +37,7 @@ const Login = () => {
 
     if (form.checkValidity() == true) {
       if (data) {
-        nav("/");
+        nav(`${baseUrl}/`);
         login(data);
       } else {
         Swal.fire({
@@ -82,9 +65,9 @@ const Login = () => {
             <div className="border rounded shadow mt-1 px-3 pb-3 bg-black">
               <div className="row g-0 m-0">
                 <div className="col-md-5">
-                  <NavLink className="text-center" to="/" aria-current="page">
+                  <NavLink className="text-center" to={`${baseUrl}/`} aria-current="page">
                     <img
-                      src="/assets/img/Bug3.jpeg"
+                      src={`${baseUrl}/assets/img/Bug3.jpeg`}
                       className="img-fluid"
                       alt="logo"
                     />
@@ -135,7 +118,7 @@ const Login = () => {
                       </span>
                     </div>
                     <div className="text-end mt-2 mb-4">
-                      <NavLink to="/auth/forget" aria-current="page" className="text-decoration-none text-white link-warning fst-italic fw-semibold font-raleway">
+                      <NavLink to={`${baseUrl}/auth/forget`} aria-current="page" className="text-decoration-none text-white link-warning fst-italic fw-semibold font-raleway">
                         Forget Password
                       </NavLink>
                     </div>
