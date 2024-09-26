@@ -7,6 +7,7 @@ import PublicLayout from './layouts/PublicLayout';
 import Welcome from './pages/Welcome';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import PostThread from "./pages/Post";
 
 const App = () => {
   return <>
@@ -19,10 +20,21 @@ const App = () => {
         <Route path="auth">
           <Route index element={<Login />} />
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Welcome />} />
         </Route>
         {/* <Route path="/pathname">
           <Route index element={<Welcome />} />
         </Route> */}
+      </Route>
+
+      <Route path="/user" element={<PublicLayout />}>
+        <Route index element={<Home />} />
+        {/* <Route path="/pathname">
+          <Route index element={<Welcome />} />
+        </Route> */}
+        <Route path="thread/post">
+          <Route index element={<PostThread />} />
+        </Route>
       </Route>
       
       <Route path="*" element={<Welcome />} />

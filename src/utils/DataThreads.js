@@ -3,7 +3,7 @@ export let threads = [
     id: 0,
     type: "question",
     author: 1,
-    contents: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore voluptatum labore, quaerat saepe eius ducimus suscipit cumque modi dolorum? Eius delectus voluptas dolore, beatae vero laborum nostrum soluta mollitia fuga.",
+    contents: "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore voluptatum labore, quaerat saepe eius ducimus suscipit cumque modi dolorum? Eius delectus voluptas dolore, beatae vero laborum nostrum soluta mollitia fuga.</p>",
     status: 3,
     time: new Date(),
   },
@@ -12,14 +12,14 @@ export let threads = [
     type: "reply",
     ref: 0,
     author: 0,
-    contents: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vitae rem, suscipit quo autem ducimus atque, adipisci veritatis velit similique ipsam. Consequatur sunt earum quasi placeat. Itaque voluptates omnis nam. Optio dicta deserunt impedit deleniti provident, id a ipsam voluptatibus enim quam dolore ipsa doloribus nihil eos minus placeat illum quo quibusdam! Impedit temporibus voluptas magnam unde quidem, commodi nemo fuga quibusdam sint, hic eligendi similique illo error fugit? Inventore laudantium unde quos? Nostrum! Nemo laboriosam ex numquam sequi inventore. Nobis eligendi nostrum dolorem quae ab, saepe aperiam itaque quidem vitae neque, doloremque maxime, cum aliquid! Minima excepturi totam adipisci fugit? Odit vero, amet itaque perspiciatis facere corporis placeat quaerat, in at, maiores animi maxime natus a. Sit!",
+    contents: "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vitae rem, suscipit quo autem ducimus atque, adipisci veritatis velit similique ipsam. Consequatur sunt earum quasi placeat. Itaque voluptates omnis nam. Optio dicta deserunt impedit deleniti provident, id a ipsam voluptatibus enim quam dolore ipsa doloribus nihil eos minus placeat illum quo quibusdam! Impedit temporibus voluptas magnam unde quidem, commodi nemo fuga quibusdam sint, hic eligendi similique illo error fugit? Inventore laudantium unde quos? Nostrum! Nemo laboriosam ex numquam sequi inventore. Nobis eligendi nostrum dolorem quae ab, saepe aperiam itaque quidem vitae neque, doloremque maxime, cum aliquid! Minima excepturi totam adipisci fugit? Odit vero, amet itaque perspiciatis facere corporis placeat quaerat, in at, maiores animi maxime natus a. Sit!</p>",
     time: new Date(),
   },
   {
     id: 2,
     type: "question",
     author: 0,
-    contents: "Natus sit fugit sunt, deleniti iusto dicta maiores doloribus! Doloremque eos autem saepe repudiandae culpa, illo debitis sit! Quia autem incidunt nostrum. Quam, repudiandae excepturi aspernatur cupiditate ullam placeat. Quisquam sit dicta recusandae natus ipsa fugiat enim odit inventore distinctio ab expedita, deleniti laborum! Sint maxime perspiciatis rerum odio, aliquid explicabo fuga vel quo labore, nobis est molestias. Veniam facilis optio, doloribus ad aspernatur voluptatem totam?",
+    contents: "<p>Natus sit fugit sunt, deleniti iusto dicta maiores doloribus! Doloremque eos autem saepe repudiandae culpa, illo debitis sit! Quia autem incidunt nostrum. Quam, repudiandae excepturi aspernatur cupiditate ullam placeat. Quisquam sit dicta recusandae natus ipsa fugiat enim odit inventore distinctio ab expedita, deleniti laborum! Sint maxime perspiciatis rerum odio, aliquid explicabo fuga vel quo labore, nobis est molestias. Veniam facilis optio, doloribus ad aspernatur voluptatem totam?</p>",
     status: 2,
     time: new Date(),
   },
@@ -27,7 +27,7 @@ export let threads = [
     id: 3,
     type: "question",
     author: 0,
-    contents: "Suscipit delectus cumque sint dolor labore quasi eligendi libero officiis neque possimus accusantium cum consequatur vel, recusandae reiciendis eius laboriosam saepe? Doloribus? Id possimus magnam error itaque omnis rem nihil ex, deleniti animi est libero quasi. Repellat rerum voluptatem itaque? Accusamus dolor necessitatibus ratione. Rem provident corporis a, fugiat recusandae dolorum debitis excepturi itaque vero qui eos earum ab, consectetur voluptatem, repudiandae deserunt aliquid nostrum blanditiis? Voluptatibus nostrum labore inventore. Ipsa nemo incidunt, corporis cumque eveniet voluptas consequuntur consectetur aspernatur quos inventore iure molestiae vero nobis officiis itaque. Repellat iure reprehenderit ad odio autem quaerat nulla voluptas at minima earum? Quis aliquid temporibus perspiciatis laudantium nihil porro vero nostrum! Qui.",
+    contents: "<p>Suscipit delectus cumque sint dolor labore quasi eligendi libero officiis neque possimus accusantium cum consequatur vel, recusandae reiciendis eius laboriosam saepe? Doloribus? Id possimus magnam error itaque omnis rem nihil ex, deleniti animi est libero quasi. Repellat rerum voluptatem itaque? Accusamus dolor necessitatibus ratione. Rem provident corporis a, fugiat recusandae dolorum debitis excepturi itaque vero qui eos earum ab, consectetur voluptatem, repudiandae deserunt aliquid nostrum blanditiis? Voluptatibus nostrum labore inventore. Ipsa nemo incidunt, corporis cumque eveniet voluptas consequuntur consectetur aspernatur quos inventore iure molestiae vero nobis officiis itaque. Repellat iure reprehenderit ad odio autem quaerat nulla voluptas at minima earum? Quis aliquid temporibus perspiciatis laudantium nihil porro vero nostrum! Qui.</p>",
     status: 1,
     time: new Date(),
   },
@@ -35,7 +35,7 @@ export let threads = [
     id: 4,
     type: "question",
     author: 2,
-    contents: "Vel, soluta qui? Autem eveniet cum deleniti rerum officia ad ab praesentium similique, tenetur, unde cupiditate aut natus doloribus accusamus quod eius! Quod nesciunt, odit corporis deleniti aliquam voluptas accusantium sequi! Blanditiis labore, totam, quisquam saepe facere distinctio id quam, illo ab officiis ullam. At ea corrupti placeat! Sequi laboriosam earum, libero voluptate repellat quam? Iure quisquam exercitationem consequatur a aperiam suscipit enim. Adipisci, tempore. Voluptatibus.",
+    contents: "<p>Vel, soluta qui? Autem eveniet cum deleniti rerum officia ad ab praesentium similique, tenetur, unde cupiditate aut natus doloribus accusamus quod eius! Quod nesciunt, odit corporis deleniti aliquam voluptas accusantium sequi! Blanditiis labore, totam, quisquam saepe facere distinctio id quam, illo ab officiis ullam. At ea corrupti placeat! Sequi laboriosam earum, libero voluptate repellat quam? Iure quisquam exercitationem consequatur a aperiam suscipit enim. Adipisci, tempore. Voluptatibus.</p>",
     status: 0,
     time: new Date(),
   },
@@ -51,6 +51,10 @@ export const emptyThread = {
   time: "",
 }
 
+export const postThread = (data) => {
+  threads.push({ ...data, id: threads.length, time: new Date() })
+}
+
 export const statusColor = (statusCode) => {
   switch (statusCode) {
     case 3:
@@ -64,4 +68,11 @@ export const statusColor = (statusCode) => {
     default:
       return "primary";
   }
+}
+
+export const statusName = {
+  0: "Closed",
+  1: "Iseng Doank",
+  2: "Nanya Aja",
+  3: "Urgent Buanget",
 }

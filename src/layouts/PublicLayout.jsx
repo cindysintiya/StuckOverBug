@@ -30,8 +30,8 @@ const PublicLayout = () => {
       <header className="fixed-top">
         <nav className="navbar navbar-expand-lg navbar-dar bg-blac navbar-trans bg-light shadow shadow-sm rounded-bottom p-1 px-md-5">
           <div className="container-fluid mx-xl-5 px-xxl-5">
-            <NavLink className="navbar-brand col-auto" to="/">
-              <img src="assets/img/Bug3.jpeg" alt="Logo" className="rounded" width={45}/>
+            <NavLink className="navbar-brand col-auto" to={`${baseUrl}/`}>
+              <img src={`${baseUrl}/assets/img/Bug3.jpeg`} alt="Logo" className="rounded" width={45}/>
               <span className="mx-1 text-decoration-underline fst-italic d-none d-sm-inline">StuckOverBug</span>
             </NavLink>
             {

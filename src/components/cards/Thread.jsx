@@ -14,10 +14,10 @@ const ThreadCard = ({ data }) => {
           <div className="col-auto p-0">
             <Avatar
               role="button"
-              data-bs-toggle="modal"
-              data-bs-target="#profileModal"
-              data-bs-backdrop="static"
-              data-bs-keyboard="false"
+              // data-bs-toggle="modal"
+              // data-bs-target="#profileModal"
+              // data-bs-backdrop="static"
+              // data-bs-keyboard="false"
               title="View Detail"
               className="ratio ratio-1x1"
             >
@@ -32,9 +32,13 @@ const ThreadCard = ({ data }) => {
             <p className="small mb-0">{moment(data.time).format("DD MMMM yyyy HH:mm")}</p>
           </div>
         </div>
-        <p className="card-text mt-2 overflow-ellipsis-3">
+        {/* <p className="card-text mt-2 overflow-ellipsis-3">
           {data.contents}
-        </p>
+        </p> */}
+        <div
+          className="card-text mt-2 overflow-ellipsis-3"
+          dangerouslySetInnerHTML={{ __html: data.contents }}
+        />
       </div>
     </div>
   </>

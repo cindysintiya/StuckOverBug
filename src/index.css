@@ -13,6 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* react-code-block */
+.table-cell {
+  display:table-cell;
+}
+.table-row {
+  display:table-row;
+}
+
 /* body {
   background-image: linear-gradient(to bottom right, pink, violet, skyblue);
 } */
@@ -24,6 +32,10 @@
   .hide-sm {
     display: block !important;
   }
+}
+
+.text-justify {
+  text-align: justify;
 }
 
 .text-shadow {
