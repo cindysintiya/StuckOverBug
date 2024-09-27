@@ -54,14 +54,6 @@ const PostThread = () => {
     try {
       const htmlString = draftToHtml(convertToRaw(editor.getCurrentContent()));
       setIsi(htmlString); 
-      // setThreadPreview({
-      //   id: -1,
-      //   type: "question",
-      //   author: loginData.id,
-      //   contents: htmlString,
-      //   status: level,
-      //   time: new Date(),
-      // });
       setThreadPreview({ ...threadPreview, contents: htmlString, status: level, time: new Date(), });
     } catch (error) {
       setThreadPreview({ ...threadPreview, status: level, time: new Date(), });
@@ -384,106 +376,9 @@ const PostThread = () => {
                 <h4 className="text-center">Thread Card <span className="fs-6">(show on home page)</span></h4>
                 <ThreadCard data={threadPreview} />
                 <br />
-                {/* <ul className="nav nav-tabs" id="snippetTab" role="tablist">
-                  <li className="nav-item me-1" role="presentation">
-                    <button
-                      className="nav-link active pb-0"
-                      id="snippet-1-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#snippet-1"
-                      type="button"
-                      role="tab"
-                      aria-controls="snippet-1"
-                      aria-selected="true"
-                    >
-                      <FaCode className="mb-1 me-2" /> {filename1}
-                    </button>
-                  </li>
-                  <li className="nav-item me-1" role="presentation">
-                    <button
-                      className="nav-link pb-0"
-                      id="snippet-2-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#snippet-2"
-                      type="button"
-                      role="tab"
-                      aria-controls="snippet-2"
-                      aria-selected="false"
-                    >
-                      <FaCode className="mb-1 me-2" /> {filename2}
-                    </button>
-                  </li>
-                  <li className="nav-item" role="presentation" onMouseDown={previewIsi}>
-                    <button
-                      className="nav-link pb-0"
-                      id="snippet-3-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#snippet-3"
-                      type="button"
-                      role="tab"
-                      aria-controls="snippet-3"
-                      aria-selected="false"
-                    >
-                      <FaCode className="mb-1 me-2" /> {filename3}
-                    </button>
-                  </li>
-                </ul>
-                <div className="tab-content px-3 border border-top-0 rounded-bottom">
-                  <div
-                    className="tab-pane fade show active pt-3"
-                    id="snippet-1"
-                    role="tabpanel"
-                    aria-labelledby="snippet-1-tab"
-                  >
-                    <CodeBlock code={snippet1} language={type1}>
-                      <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                        <div className="table-row">
-                          <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                          <CodeBlock.LineContent className="table-cell">
-                            <CodeBlock.Token />
-                          </CodeBlock.LineContent>
-                        </div>
-                      </CodeBlock.Code>
-                    </CodeBlock>
-                  </div>
-                  <div
-                    className="tab-pane fade pt-3"
-                    id="snippet-2"
-                    role="tabpanel"
-                    aria-labelledby="snippet-2-tab"
-                  >
-                    <CodeBlock code={snippet2} language={type2}>
-                      <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                        <div className="table-row">
-                          <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                          <CodeBlock.LineContent className="table-cell">
-                            <CodeBlock.Token />
-                          </CodeBlock.LineContent>
-                        </div>
-                      </CodeBlock.Code>
-                    </CodeBlock>
-                  </div>
-                  <div
-                    className="tab-pane fade pt-3"
-                    id="snippet-3"
-                    role="tabpanel"
-                    aria-labelledby="snippet-3-tab"
-                  >
-                    <CodeBlock code={snippet3} language={type3}>
-                      <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                        <div className="table-row">
-                          <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                          <CodeBlock.LineContent className="table-cell">
-                            <CodeBlock.Token />
-                          </CodeBlock.LineContent>
-                        </div>
-                      </CodeBlock.Code>
-                    </CodeBlock>
-                  </div>
-                </div> */}
                 
                 <h4 className="text-center">Thread Detail <span className="fs-6">(show on detail page)</span></h4>
-                <div className="border rounded p-3">
+                <div className="border rounded p-3 pb-0">
                   <div className="row m-0 gap-2 align-items-start">
                     <div className="col-auto p-0">
                       <Avatar
