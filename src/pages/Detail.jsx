@@ -3,16 +3,24 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Avatar } from "@mui/material";
+import { CodeBlock } from "react-code-block";
+import { FaCode } from "react-icons/fa6";
+
 import { findThread, statusName } from "../utils/DataThreads";
 import { userDetail } from "../utils/DataUsers";
-import { FaCode } from "react-icons/fa6";
-import { CodeBlock } from "react-code-block";
+
+import ReplyBox from "../components/modals/ReplyBox";
+import BlankPage from "../components/loaders/Blank";
 
 const DetailThread = () => {
   const id = useParams().id;
 
   const [thread, setThread] = useState();
   const [replies, setReplies] = useState();
+
+  const addReply = (reply) => {
+    setReplies([reply, ...replies]);
+  }
 
   useEffect(() => {
     setThread(findThread(id).thread);
@@ -104,7 +112,14 @@ const DetailThread = () => {
           }
 
           {/* REPLY */}
-          <h4 className="ms-2 mt-4 mb-0">Reply <span className="fs-6 text-secondary">({replies.length})</span></h4>
+          <div className="row mx-0 mt-4 justify-content-between align-items-center">
+            <h4 className="col mb-0">Reply <span className="fs-6 text-secondary">({replies.length})</span></h4>
+            <div className="col-auto">
+              <button className="btn btn-success pt-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#replyModal">
+                + New Reply
+              </button>
+            </div>
+          </div>
           <hr className="my-2"/>
           {
             replies && replies.length? <>
@@ -186,9 +201,10 @@ const DetailThread = () => {
                 }
               </div>
             </> : <>
-              <h5 className="text-center pt-4 pb-3">No Reply yet...</h5>
+              <p className="text-center pt-4 pb-3">No Reply yet...</p>
             </>
           }
+          <ReplyBox refId={id} addReply={addReply}/>
         </div>
         <div className="col-md-3">
           <div className="border rounded p-3">
@@ -196,7 +212,7 @@ const DetailThread = () => {
           </div>
         </div>
       </div>
-    </> : <></>
+    </> : <BlankPage />
   )
 }
 

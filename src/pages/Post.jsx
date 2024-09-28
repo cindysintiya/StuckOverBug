@@ -60,7 +60,7 @@ const PostThread = () => {
     }
   };
 
-  const posting = (e) => {
+  const postingThread = (e) => {
     e.preventDefault();
     const form = document.querySelector(".needs-validation");
     form.classList.add("was-validated");
@@ -94,8 +94,8 @@ const PostThread = () => {
       Swal.fire({
         icon: "error",
         title: "Empty Thread",
-        text: "You must write down your question so other SOBug can help you fixing your code. What can we solve if you don't ptovide your question? X(",
-        confirmButtonColor: "#00b6db",
+        text: "You must write down your question so other SOBug can help you fixing your code. What can we solve if you don't provide your question? X(",
+        // confirmButtonColor: "#00b6db",
       });
     }
   }
@@ -104,10 +104,10 @@ const PostThread = () => {
     <>
       <div className="row row-gap-1 m-2 pb-3">
         <div className="col-md-10 offset-md-1">
-          <ul className="nav nav-tabs" id="myTab" role="tablist">
+          <ul className="nav nav-tabs flex-nowrap overflow-auto overflow-y-hidden" id="myTab" role="tablist">
             <li className="nav-item me-1" role="presentation">
               <button
-                className="nav-link active"
+                className="nav-link active text-nowrap"
                 id="form-editor-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#form-editor"
@@ -121,7 +121,7 @@ const PostThread = () => {
             </li>
             <li className="nav-item me-1" role="presentation">
               <button
-                className="nav-link"
+                className="nav-link text-nowrap"
                 id="snippet-editor-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#snippet-editor"
@@ -135,7 +135,7 @@ const PostThread = () => {
             </li>
             <li className="nav-item" role="presentation" onMouseDown={previewIsi}>
               <button
-                className="nav-link"
+                className="nav-link text-nowrap"
                 id="preview-thread-tab"
                 data-bs-toggle="tab"
                 data-bs-target="#preview-thread"
@@ -156,9 +156,9 @@ const PostThread = () => {
               aria-labelledby="form-editor-tab"
             >
               <form
-                id="form-berita"
+                id="form-thread"
                 className="needs-validation"
-                // onSubmit={postBerita}
+                onSubmit={postingThread}
                 noValidate
               >
                 <Editor
@@ -216,7 +216,6 @@ const PostThread = () => {
                     type="submit"
                     id="btn-save"
                     onMouseDown={previewIsi}
-                    onClick={posting}
                     className="btn btn-primary shadow mt-3"
                   >
                     Post Thread
@@ -408,7 +407,7 @@ const PostThread = () => {
                 </div>
                 <br />
 
-                <h4 className="text-center">Code Snippet <span className="fs-6">(show on detail page)</span></h4>
+                <h4 className="text-center">Code Snippet(s) <span className="fs-6">(show on detail page)</span></h4>
                 {
                   snippet1.trim() || filename1.trim()? <>
                     {/* snipp 1 */}
