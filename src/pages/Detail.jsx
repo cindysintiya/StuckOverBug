@@ -112,7 +112,7 @@ const DetailThread = () => {
             <h4 className="col mb-0">Reply <span className="fs-6 text-secondary">({replies.length})</span></h4>
             <div className="col-auto" title={isLogin? "" : "Please Login for Replying this Thread."}>
               {
-                isLogin && thread.status? <>
+                isLogin && thread.status>0? <>
                   <button className="btn btn-success pt-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#replyModal">
                     + New Reply
                   </button>
@@ -141,7 +141,7 @@ const DetailThread = () => {
             </>
           }
           {
-            isLogin && thread.status? 
+            isLogin && thread.status>0? 
               <ReplyBox refId={id} addReply={addReply}/> : <>
                 <div className="position-relative">
                   <hr className="border-warning border-3 mt-2 mb-0" />
@@ -168,7 +168,7 @@ const DetailThread = () => {
                     })
                   }
                 </> : <>
-                  <p className="text-center pt-4 pb-3">No Comment yet...</p>
+                  <p className="text-center pt-5 pb-3">No Comment yet...</p>
                 </>
               }
             </div>

@@ -22,7 +22,7 @@ export let threads = [
       },
     ],
     status: 3,
-    time: new Date(),
+    time: new Date(Date.now() - 360000),
   },
   {
     id: 1,
@@ -31,7 +31,7 @@ export let threads = [
     author: 0,
     contents: "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, vitae rem, suscipit quo autem ducimus atque, adipisci veritatis velit similique ipsam. Consequatur sunt earum quasi placeat. Itaque voluptates omnis nam. Optio dicta deserunt impedit deleniti provident, id a ipsam voluptatibus enim quam dolore ipsa doloribus nihil eos minus placeat illum quo quibusdam! Impedit temporibus voluptas magnam unde quidem, commodi nemo fuga quibusdam sint, hic eligendi similique illo error fugit? Inventore laudantium unde quos? Nostrum! Nemo laboriosam ex numquam sequi inventore. Nobis eligendi nostrum dolorem quae ab, saepe aperiam itaque quidem vitae neque, doloremque maxime, cum aliquid! Minima excepturi totam adipisci fugit? Odit vero, amet itaque perspiciatis facere corporis placeat quaerat, in at, maiores animi maxime natus a. Sit!</p>",
     snippets: [],
-    time: new Date(),
+    time: new Date(Date.now() - 100000),
   },
   {
     id: 2,
@@ -40,7 +40,7 @@ export let threads = [
     contents: "<p>Natus sit fugit sunt, deleniti iusto dicta maiores doloribus! Doloremque eos autem saepe repudiandae culpa, illo debitis sit! Quia autem incidunt nostrum. Quam, repudiandae excepturi aspernatur cupiditate ullam placeat. Quisquam sit dicta recusandae natus ipsa fugiat enim odit inventore distinctio ab expedita, deleniti laborum! Sint maxime perspiciatis rerum odio, aliquid explicabo fuga vel quo labore, nobis est molestias. Veniam facilis optio, doloribus ad aspernatur voluptatem totam?</p>",
     snippets: [],
     status: 1,
-    time: new Date(),
+    time: new Date(Date.now() - 1800000),
   },
   {
     id: 3,
@@ -58,7 +58,7 @@ export let threads = [
     contents: "<p>Vel, soluta qui? Autem eveniet cum deleniti rerum officia ad ab praesentium similique, tenetur, unde cupiditate aut natus doloribus accusamus quod eius! Quod nesciunt, odit corporis deleniti aliquam voluptas accusantium sequi! Blanditiis labore, totam, quisquam saepe facere distinctio id quam, illo ab officiis ullam. At ea corrupti placeat! Sequi laboriosam earum, libero voluptate repellat quam? Iure quisquam exercitationem consequatur a aperiam suscipit enim. Adipisci, tempore. Voluptatibus.</p>",
     snippets: [],
     status: 0,
-    time: new Date(Date.now() + 960000),
+    time: new Date(Date.now() - 960000),
   },
   {
     id: 5,
