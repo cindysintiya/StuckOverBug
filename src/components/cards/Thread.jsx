@@ -1,10 +1,10 @@
 import "./thread.css";
 
-import moment from "moment";
 
 import { Avatar } from "@mui/material";
 import { userDetail } from "../../utils/DataUsers";
 import { statusColor } from "../../utils/DataThreads";
+import { datetimeFormat } from "../../utils/format";
 
 const ThreadCard = ({ data }) => {
   return <>
@@ -29,7 +29,7 @@ const ThreadCard = ({ data }) => {
             <p className="card-title mb-0 small text-secondary">@{userDetail(data.author).username}</p>
           </div>
           <div className="col text-end">
-            <p className="small mb-0">{moment(data.time).format("DD MMMM yyyy HH:mm")}</p>
+            <p className="small mb-0">{datetimeFormat(data.time, "DD MMMM yyyy HH:mm")}</p>
           </div>
         </div>
         {/* <p className="card-text mt-2 overflow-ellipsis-3">

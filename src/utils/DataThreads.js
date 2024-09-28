@@ -57,7 +57,7 @@ export let threads = [
     author: 2,
     contents: "<p>Vel, soluta qui? Autem eveniet cum deleniti rerum officia ad ab praesentium similique, tenetur, unde cupiditate aut natus doloribus accusamus quod eius! Quod nesciunt, odit corporis deleniti aliquam voluptas accusantium sequi! Blanditiis labore, totam, quisquam saepe facere distinctio id quam, illo ab officiis ullam. At ea corrupti placeat! Sequi laboriosam earum, libero voluptate repellat quam? Iure quisquam exercitationem consequatur a aperiam suscipit enim. Adipisci, tempore. Voluptatibus.</p>",
     snippets: [],
-    status: 1,
+    status: 0,
     time: new Date(Date.now() + 960000),
   },
   {

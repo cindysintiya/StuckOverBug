@@ -1,30 +1,51 @@
-import moment from "moment";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Avatar } from "@mui/material";
 import { CodeBlock } from "react-code-block";
 import { FaCode } from "react-icons/fa6";
+import { IoSend } from "react-icons/io5";
 
 import { findThread, statusName } from "../utils/DataThreads";
+import { getComments, postComment } from "../utils/DataComments";
 import { userDetail } from "../utils/DataUsers";
+import { datetimeFormat } from "../utils/format";
 
 import ReplyBox from "../components/modals/ReplyBox";
 import BlankPage from "../components/loaders/Blank";
+import AuthContext from "../contexts/AuthProvider";
 
 const DetailThread = () => {
   const id = useParams().id;
 
   const [thread, setThread] = useState();
   const [replies, setReplies] = useState();
+  const [comments, setComments] = useState();
+
+  const [commentBox, setCommentBox] = useState("");
+
+  const { loginData } = useContext(AuthContext);
 
   const addReply = (reply) => {
     setReplies([reply, ...replies]);
   }
 
+  const postingComment = (e) => {
+    e.preventDefault();
+    const data = {
+      author: loginData.id,
+      ref: id,
+      contents: commentBox,
+    }
+    setComments([postComment(data), ...comments]);
+    setCommentBox("");
+    document.getElementById("comments-box").scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   useEffect(() => {
     setThread(findThread(id).thread);
     setReplies(findThread(id).replies);
+    setComments(getComments(id));
   }, []);
 
   return (
@@ -49,7 +70,7 @@ const DetailThread = () => {
             </div>
             <div className="d-flex flex-wrap m-0 mt-2">
               <div className="col p-0">
-                <p className="small mb-0 text-nowrap"><span className="text-secondary me-1">Posted on</span> {moment(thread.time).format("DD MMMM yyyy HH:mm")}</p>
+                <p className="small mb-0 text-nowrap"><span className="text-secondary me-1">Posted on</span> {datetimeFormat(thread.time, "DD MMMM yyyy HH:mm")}</p>
               </div>
               <div className="col p-0">
                 <p className="small mb-0 text-nowrap"><span className="text-secondary me-1">Status</span> {statusName[thread.status]}</p>
@@ -115,9 +136,17 @@ const DetailThread = () => {
           <div className="row mx-0 mt-4 justify-content-between align-items-center">
             <h4 className="col mb-0">Reply <span className="fs-6 text-secondary">({replies.length})</span></h4>
             <div className="col-auto">
-              <button className="btn btn-success pt-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#replyModal">
-                + New Reply
-              </button>
+              {
+                thread.status? <>
+                  <button className="btn btn-success pt-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#replyModal">
+                    + New Reply
+                  </button>
+                </> : <>
+                  <button className="btn btn-success pt-1 disabled" disabled>
+                    + New Reply
+                  </button>
+                </>
+              }
             </div>
           </div>
           <hr className="my-2"/>
@@ -145,7 +174,7 @@ const DetailThread = () => {
                                 <span className="small text-secondary"> (@{userDetail(reply.author).username})</span>
                               </h6>
                               {/* <p className="card-title mb-0 small text-secondary"></p> */}
-                              <p className="small mt-1 mb-0 text-nowrap"><span className="text-secondary me-1">Reply on</span> {moment(reply.time).format("DD MMMM yyyy HH:mm")}</p>
+                              <p className="small mt-1 mb-0 text-nowrap"><span className="text-secondary me-1">Reply on</span> {datetimeFormat(reply.time, "DD MMMM yyyy HH:mm")}</p>
                             </div>
                           </div>
                         </div>
@@ -204,11 +233,65 @@ const DetailThread = () => {
               <p className="text-center pt-4 pb-3">No Reply yet...</p>
             </>
           }
-          <ReplyBox refId={id} addReply={addReply}/>
+          {
+            thread.status? 
+              <ReplyBox refId={id} addReply={addReply}/> : <>
+                <div className="position-relative">
+                  <hr className="border-warning border-3 mt-2 mb-0" />
+                  <hr className="border-warning border-3 my-1" />
+                  <div className="position-absolute top-50 start-50 translate-middle mt-1">
+                    <h6 className="position-relative bg-white px-2 text-nowrap">THREAD CLOSED</h6>
+                  </div>
+                </div>
+              </>
+          }
         </div>
+        {/* COMMENTS */}
         <div className="col-md-3">
-          <div className="border rounded p-3">
-            <h6>Comment(s) on this Thread:</h6>
+          <div className="border rounded mx-md-0 mx-2">
+            <h6 className="p-3 mb-0 bg-light rounded-top">Comment(s) on this Thread:</h6>
+            <div className="overflow-auto overflow-x-hidden p-2 pt-0" id="comments-box" style={{ maxHeight: 280 }}>
+              {
+                comments && comments.length? <>
+                  {
+                    comments.map((comment) => {
+                      return <div key={comment.id} className="border-top px-2 pt-2">
+                        <div className="d-flex flex-wrap justify-content-between">
+                          <p className="mb-0 small fw-bold">
+                            @{userDetail(comment.author).username}
+                          </p>
+                          <p className="mb-0 small text-secondary text-end">
+                            {datetimeFormat(comment.time)}
+                          </p>
+                        </div>
+                        <p className="mb-2">{comment.contents}</p>
+                      </div>
+                    })
+                  }
+                </> : <>
+                  <p className="text-center pt-4 pb-3">No Comment yet...</p>
+                </>
+              }
+            </div>
+            <div className="p-2 bg-light rounded-bottom">
+              <form className="row m-1 gap-2" onSubmit={postingComment}>
+                <input 
+                  type="text" 
+                  name="comment-box" 
+                  id="comment-box" 
+                  className="form-control col" 
+                  maxLength={100}
+                  autoComplete="off"
+                  placeholder="Type comment..."
+                  value={commentBox}
+                  onChange={(e) => setCommentBox(e.target.value)}
+                  required
+                />
+                <button type="submit" className="btn btn-success pt-0 pb-1 col-auto" disabled={commentBox.trim()==""}>
+                  <IoSend size={19}/>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

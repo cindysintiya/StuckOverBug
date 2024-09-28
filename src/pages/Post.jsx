@@ -1,6 +1,5 @@
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
-import moment from "moment";
 import { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthProvider";
@@ -15,11 +14,11 @@ import { BiEdit } from "react-icons/bi";
 import { FaCode } from "react-icons/fa6";
 import { IoNewspaperOutline } from "react-icons/io5";
 
-import { baseUrl } from "../utils/format";
+import Swal from "sweetalert2";
+import { baseUrl, datetimeFormat } from "../utils/format";
 import { userDetail } from "../utils/DataUsers";
 import { postThread, statusName } from "../utils/DataThreads";
 import ThreadCard from "../components/cards/Thread";
-import Swal from "sweetalert2";
 
 const PostThread = () => {
   const [level, setLevel] = useState(2);
@@ -394,7 +393,7 @@ const PostThread = () => {
                   </div>
                   <div className="d-flex flex-wrap m-0 mt-2">
                     <div className="col p-0">
-                      <p className="small mb-0 text-nowrap"><span className="text-secondary me-1">Posted on</span> {moment(threadPreview.time).format("DD MMMM yyyy HH:mm")}</p>
+                      <p className="small mb-0 text-nowrap"><span className="text-secondary me-1">Posted on</span> {datetimeFormat(threadPreview.time, "DD MMMM yyyy HH:mm")}</p>
                     </div>
                     <div className="col p-0">
                       <p className="small mb-0 text-nowrap"><span className="text-secondary me-1">Status</span> {statusName[level]}</p>
