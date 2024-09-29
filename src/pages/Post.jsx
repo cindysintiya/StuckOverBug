@@ -7,7 +7,6 @@ import AuthContext from "../contexts/AuthProvider";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import { convertToRaw } from "draft-js";
-import { CodeBlock } from "react-code-block";
 
 import { BiEdit } from "react-icons/bi";
 import { FaCode } from "react-icons/fa6";
@@ -19,6 +18,7 @@ import { postThread } from "../utils/DataThreads";
 
 import ThreadCard from "../components/cards/Thread";
 import ThreadDetailCard from "../components/cards/ThreadDetail";
+import CodeSnippet from "../components/cards/Snippet";
 
 const PostThread = () => {
   const [level, setLevel] = useState(2);
@@ -68,24 +68,36 @@ const PostThread = () => {
 
       const data = {
         ...threadPreview,
-        snippets: [
+        snippets: []
+      };
+
+      if (filename1 || snippet1) {
+        data.snippets.push(
           {
             filename: filename1,
             type: type1,
             code: snippet1,
-          },
+          }
+        );
+      }
+      if (filename2 || snippet2) {
+        data.snippets.push(
           {
             filename: filename2,
             type: type2,
             code: snippet2,
-          },
+          }
+        );
+      }
+      if (filename3 || snippet3) {
+        data.snippets.push(
           {
             filename: filename3,
             type: type3,
             code: snippet3,
-          },
-        ]
-      };
+          }
+        );
+      }
 
       postThread(data);
       nav(`${baseUrl}/`);
@@ -165,7 +177,7 @@ const PostThread = () => {
                   onEditorStateChange={(val) => setEditor(val)}
                   // toolbarClassName="mt-2"
                   editorClassName="demo-editor border px-3"
-                  editorStyle={{ height: 235 }}
+                  editorStyle={{ height: window.visualViewport.height * 0.5 }}
                   required
                 />
                 <input
@@ -203,21 +215,23 @@ const PostThread = () => {
                     </div>
                   </div>
                 </div>
-                <div className="float-end pt-2 pb-3">
+                <div className="float-start pt-2 pb-3">
                   <NavLink
                     to={`${baseUrl}/`}
                     aria-current="page"
-                    className="btn btn-warning shadow mt-3 me-2"
+                    className="btn btn-outline-danger shadow mt-3 me-2"
                   >
-                    CANCEL
+                    Discard
                   </NavLink>
+                </div>
+                <div className="float-end pt-2 pb-3">
                   <button
                     type="submit"
                     id="btn-save"
                     onMouseDown={previewIsi}
                     className="btn btn-primary shadow mt-3"
                   >
-                    Post Thread
+                    POST THREAD
                   </button>
                 </div>
               </form>
@@ -227,7 +241,7 @@ const PostThread = () => {
               id="snippet-editor"
               role="tabpanel"
               aria-labelledby="snippet-editor-tab"
-              style={{ height: 420 }}
+              style={{ height: window.visualViewport.height * 0.75 }}
             >
               <div className="p-2">
                 <h6 className="text-center text-primary"><span className="text-danger">NOTE:</span> Use {"<space>"} as alternate of {"<tab>"}</h6>
@@ -242,6 +256,7 @@ const PostThread = () => {
                       placeholder="filename.ext"
                       value={filename1} 
                       onChange={(e) => setFilename1(e.target.value)} 
+                      autoComplete="off"
                     />
                   </div>
                   <div className="col-xl-3 col-md-4 col-sm-5 col">
@@ -261,7 +276,7 @@ const PostThread = () => {
                       <option value="yml">Language: YML</option>
                       <option value="xml">Language: XML</option>
                       <option value="md">Language: MD</option>
-                      </select>
+                    </select>
                   </div>
                 </div>
                 <textarea 
@@ -286,6 +301,7 @@ const PostThread = () => {
                       placeholder="filename.ext"
                       value={filename2} 
                       onChange={(e) => setFilename2(e.target.value)} 
+                      autoComplete="off"
                     />
                   </div>
                   <div className="col-xl-3 col-md-4 col-sm-5 col">
@@ -305,7 +321,7 @@ const PostThread = () => {
                       <option value="yml">Language: YML</option>
                       <option value="xml">Language: XML</option>
                       <option value="md">Language: MD</option>
-                      </select>
+                    </select>
                   </div>
                 </div>
                 <textarea 
@@ -330,6 +346,7 @@ const PostThread = () => {
                       placeholder="filename.ext"
                       value={filename3} 
                       onChange={(e) => setFilename3(e.target.value)} 
+                      autoComplete="off"
                     />
                   </div>
                   <div className="col-xl-3 col-md-4 col-sm-5 col">
@@ -349,7 +366,7 @@ const PostThread = () => {
                       <option value="yml">Language: YML</option>
                       <option value="xml">Language: XML</option>
                       <option value="md">Language: MD</option>
-                      </select>
+                    </select>
                   </div>
                 </div>
                 <textarea 
@@ -368,7 +385,7 @@ const PostThread = () => {
               id="preview-thread"
               role="tabpanel"
               aria-labelledby="preview-thread-tab"
-              style={{ height: 420 }}
+              style={{ height: window.visualViewport.height * 0.75 }}
             >
               <div className="col-md-10 offset-md-1">
                 <h4 className="text-center">Thread Card <span className="fs-6">(show on home page)</span></h4>
@@ -382,122 +399,17 @@ const PostThread = () => {
                 <h4 className="text-center">Code Snippet(s) <span className="fs-6">(show on detail page)</span></h4>
                 {
                   snippet1.trim() || filename1.trim()? <>
-                    {/* snipp 1 */}
-                    <ul className="nav nav-tabs" id="snippetTab1" role="tablist">
-                      <li className="nav-item me-1" role="presentation">
-                        <button
-                          className="nav-link active pb-0"
-                          id="snippet-1-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#snippet-1"
-                          type="button"
-                          role="tab"
-                          aria-controls="snippet-1"
-                          aria-selected="true"
-                        >
-                          <FaCode className="mb-1 me-2" /> {filename1}
-                        </button>
-                      </li>
-                    </ul>
-                    <div className="tab-content px-3 mb-2 border border-top-0 rounded-bottom">
-                      <div
-                        className="tab-pane fade show active pt-3"
-                        id="snippet-1"
-                        role="tabpanel"
-                        aria-labelledby="snippet-1-tab"
-                      >
-                        <CodeBlock code={snippet1} language={type1}>
-                          <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                            <div className="table-row">
-                              <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                              <CodeBlock.LineContent className="table-cell">
-                                <CodeBlock.Token />
-                              </CodeBlock.LineContent>
-                            </div>
-                          </CodeBlock.Code>
-                        </CodeBlock>
-                      </div>
-                    </div>
+                    <CodeSnippet filename={filename1} type={type1} code={snippet1} />
                   </> : <></>
                 }
                 {
                   snippet2.trim() || filename2.trim()? <>
-                    {/* snipp 2 */}
-                    <ul className="nav nav-tabs" id="snippetTab3" role="tablist">
-                      <li className="nav-item me-1" role="presentation">
-                        <button
-                          className="nav-link active pb-0"
-                          id="snippet-2-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#snippet-2"
-                          type="button"
-                          role="tab"
-                          aria-controls="snippet-2"
-                          aria-selected="true"
-                        >
-                          <FaCode className="mb-1 me-2" /> {filename2}
-                        </button>
-                      </li>
-                    </ul>
-                    <div className="tab-content px-3 mb-2 border border-top-0 rounded-bottom">
-                      <div
-                        className="tab-pane fade show active pt-3"
-                        id="snippet-2"
-                        role="tabpanel"
-                        aria-labelledby="snippet-2-tab"
-                      >
-                        <CodeBlock code={snippet2} language={type2}>
-                          <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                            <div className="table-row">
-                              <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                              <CodeBlock.LineContent className="table-cell">
-                                <CodeBlock.Token />
-                              </CodeBlock.LineContent>
-                            </div>
-                          </CodeBlock.Code>
-                        </CodeBlock>
-                      </div>
-                    </div>
+                    <CodeSnippet filename={filename2} type={type2} code={snippet2} />
                   </> : <></>
                 }
                 {
                   snippet3.trim() || filename3.trim()? <>
-                    {/* snipp 3 */}
-                    <ul className="nav nav-tabs" id="snippetTab3" role="tablist">
-                      <li className="nav-item me-1" role="presentation">
-                        <button
-                          className="nav-link active pb-0"
-                          id="snippet-3-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#snippet-3"
-                          type="button"
-                          role="tab"
-                          aria-controls="snippet-3"
-                          aria-selected="true"
-                        >
-                          <FaCode className="mb-1 me-2" /> {filename3}
-                        </button>
-                      </li>
-                    </ul>
-                    <div className="tab-content px-3 mb-2 border border-top-0 rounded-bottom">
-                      <div
-                        className="tab-pane fade show active pt-3"
-                        id="snippet-3"
-                        role="tabpanel"
-                        aria-labelledby="snippet-3-tab"
-                      >
-                        <CodeBlock code={snippet3} language={type3}>
-                          <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                            <div className="table-row">
-                              <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                              <CodeBlock.LineContent className="table-cell">
-                                <CodeBlock.Token />
-                              </CodeBlock.LineContent>
-                            </div>
-                          </CodeBlock.Code>
-                        </CodeBlock>
-                      </div>
-                    </div>
+                    <CodeSnippet filename={filename3} type={type3} code={snippet3} />
                   </> : <></>
                 }
               </div>

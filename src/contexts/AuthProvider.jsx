@@ -1,20 +1,21 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
-import { baseUrl } from "../utils/format";
+import { emptyUser } from "../utils/DataUsers";
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [loginData, setLoginData] = useState({
-    id: 1,
-    username: "ask_sob",
-    password: "buzidao",
-    realname: "Ask Over Bug",
-    profile: `${baseUrl}/assets/img/Bug1.jpeg`,
-    email: "ask@over.bug",
-    active: 1,
-  });
+  const [isLogin, setIsLogin] = useState(false);
+  const [loginData, setLoginData] = useState(emptyUser);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+
+    if (token) {
+      setIsLogin(true);
+      setLoginData(JSON.parse(token));      
+    }
+  }, []);
 
   return (
     <AuthContext.Provider value={{ isLogin, setIsLogin, loginData, setLoginData, }}>

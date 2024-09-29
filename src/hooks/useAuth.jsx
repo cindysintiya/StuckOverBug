@@ -9,6 +9,8 @@ const useLogout = () => {
   const logout = () => {
     setIsLogin(false);
     setLoginData(emptyUser);
+    
+    sessionStorage.clear();
   };
 
   return logout;
@@ -17,9 +19,11 @@ const useLogout = () => {
 const useLogin = () => {
   const { setIsLogin, setLoginData } = useContext(AuthContext);
 
-  const login = (data) => {
+  const login = (data) => {    
     setIsLogin(true);
     setLoginData(data);
+    
+    sessionStorage.setItem("token", JSON.stringify(data));
   };
 
   return login;

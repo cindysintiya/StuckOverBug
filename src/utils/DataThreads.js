@@ -89,7 +89,7 @@ export const emptyThread = {
 }
 
 export const getThreads = () => {
-  return threads.sort((a, b) => b.status - a.status);
+  return (threads.filter((thread) => thread.type == "question")).sort((a, b) => b.status - a.status);
 }
 
 export const postThread = (data) => {

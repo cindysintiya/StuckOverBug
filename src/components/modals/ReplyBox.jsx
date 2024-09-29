@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
-import { CodeBlock } from "react-code-block";
 import AuthContext from "../../contexts/AuthProvider";
 
 import { CgTrashEmpty } from "react-icons/cg";
-import { FaCode } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 
 import Swal from "sweetalert2";
 import { postThread } from "../../utils/DataThreads";
+
+import CodeSnippet from "../cards/Snippet";
 
 const ReplyBox = ({ refId, addReply }) => {
   const [answer, setAnswer] = useState("");
@@ -20,19 +20,23 @@ const ReplyBox = ({ refId, addReply }) => {
   const postingAnswer = (e) => {
     e.preventDefault();
     if (answer.trim() != "") {
-      const data = {
+      let data = {
         type: "reply",
         ref: refId,
         author: loginData.id,
         contents: `<p>${answer}</p>`,
-        snippets: [
+        snippets: [],
+      };
+
+      if (filename || snippet) {
+        data.snippets.push(
           {
             filename: filename,
             type: type,
             code: snippet,
-          },
-        ]
-      };
+          }
+        );
+      }
 
       addReply(postThread(data));
       document.getElementById("close-reply").click();
@@ -82,16 +86,17 @@ const ReplyBox = ({ refId, addReply }) => {
               <div className="col">
                 <input 
                   type="text" 
-                  name="filename-" 
-                  id="filename-" 
+                  name="filename-reply" 
+                  id="filename-reply" 
                   className="form-control" 
                   placeholder="filename.ext"
                   value={filename} 
                   onChange={(e) => setFilename(e.target.value)} 
+                  autoComplete="off"
                 />
               </div>
               <div className="col-xl-4 col-md-5 col-sm-6 col">
-                <select name="type-" id="type-" className="form-select" value={type} onChange={(e) => setType(e.target.value)}>
+                <select name="type-reply" id="type-reply" className="form-select" value={type} onChange={(e) => setType(e.target.value)}>
                   {/* cpp, python, html, css, js, jsx, ts, tsx, json, yaml, yml, xml, md */}
                   <option value="" disabled>- Choose Language -</option>
                   <option value="text">Language: Text</option>
@@ -120,44 +125,11 @@ const ReplyBox = ({ refId, addReply }) => {
               onChange={(e) => setSnippet(e.target.value)} 
             />
             <h6 className="text-center text-primary mt-2"><span className="text-danger">NOTE:</span> Use {"<space>"} as alternate of {"<tab>"}</h6>
-
+            
+            {/* Preview Snippet */}
             {
               snippet.trim() || filename.trim()? <>
-                <ul className="nav nav-tabs" id="snippetTab1" role="tablist">
-                  <li className="nav-item me-1" role="presentation">
-                    <button
-                      className="nav-link active pb-0"
-                      id="snippet-1-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#snippet-1"
-                      type="button"
-                      role="tab"
-                      aria-controls="snippet-1"
-                      aria-selected="true"
-                    >
-                      <FaCode className="mb-1 me-2" /> {filename}
-                    </button>
-                  </li>
-                </ul>
-                <div className="tab-content px-3 mb-2 border border-top-0 rounded-bottom">
-                  <div
-                    className="tab-pane fade show active pt-3"
-                    id="snippet-1"
-                    role="tabpanel"
-                    aria-labelledby="snippet-1-tab"
-                  >
-                    <CodeBlock code={snippet} language={type}>
-                      <CodeBlock.Code className="bg-dark px-4 py-3 rounded shadow-sm">
-                        <div className="table-row">
-                          <CodeBlock.LineNumber className="table-cell pe-3 text-secondary" />
-                          <CodeBlock.LineContent className="table-cell">
-                            <CodeBlock.Token />
-                          </CodeBlock.LineContent>
-                        </div>
-                      </CodeBlock.Code>
-                    </CodeBlock>
-                  </div>
-                </div>
+                <CodeSnippet filename={filename} type={type} code={snippet} />
               </> : <></>
             }
           </div>

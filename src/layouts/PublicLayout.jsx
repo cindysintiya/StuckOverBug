@@ -19,7 +19,7 @@ const PublicLayout = () => {
   const { isLogin, loginData } = useContext(AuthContext);
   const logout = useLogout();
   
-  const { showSearch, setShowSearch } = useContext(SearchContext);
+  const { showSearch, setShowSearch, searchVal, setSearchVal } = useContext(SearchContext);
 
   const url = useLocation();
 
@@ -40,7 +40,15 @@ const PublicLayout = () => {
               showSearch? (
                 <>
                   <form className="d-flex container-fluid p-0 col my-2">
-                    <input className="form-control me-2" type="search" placeholder="Type your question here..." aria-label="Search" name="search" />
+                    <input 
+                      type="search" 
+                      className="form-control me-2" 
+                      placeholder="Type your question here..." 
+                      aria-label="Search" 
+                      name="search" 
+                      value={searchVal}
+                      onChange={(e) => setSearchVal(e.target.value)}
+                    />
                     <button className="btn p-1 pt-0" type="submit"><FcSearch size={30} /></button>
                   </form>
                   <span className="mx-3 mb-2 fs-3 lead text-secondary">|</span>
