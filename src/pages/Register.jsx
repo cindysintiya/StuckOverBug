@@ -68,25 +68,36 @@ const Register = () => {
         //   socket.disconnect();
         // };
 
-        postRegister(data)
-          .then((res) => {
-            register(res.data.data);
+        Swal.fire({
+          title: "Please Wait...",
+          text: "We're trying to signing you up ^^",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showConfirmButton: false,
+          willOpen: () => {
+            Swal.showLoading();
+            
+            postRegister(data)
+              .then((res) => {
+                register(res.data.data);
 
-            Swal.fire({
-              icon: "success",
-              title: "Registration Success!",
-              text: "You can now log in.",
-              confirmButtonText: "LOGIN NOW",
-            }).then(() => {
-              nav(`${baseUrl}/auth/login`);
-            });
-          }).catch((err) => {
-            Swal.fire({
-              icon: "error",
-              title: "Login Failed!",
-              text: err.response?.data.message,
-            });
-          });
+                Swal.fire({
+                  icon: "success",
+                  title: "Registration Success!",
+                  text: "You can now log in.",
+                  confirmButtonText: "LOGIN NOW",
+                }).then(() => {
+                  nav(`${baseUrl}/auth/login`);
+                });
+              }).catch((err) => {
+                Swal.fire({
+                  icon: "error",
+                  title: "Registration Failed!",
+                  text: err.response?.data.message,
+                });
+              });
+          }
+        });
       } else {
         Swal.fire({
           icon: "error",

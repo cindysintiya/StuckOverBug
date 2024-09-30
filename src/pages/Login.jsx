@@ -63,18 +63,29 @@ const Login = () => {
       //   socket.off("resLogin");
       //   socket.disconnect();
       // };
-      
-      postLogin(data)
-        .then((res) => {
-          nav(`${baseUrl}/`);
-          login(res.data.data);
-        }).catch((err) => {
-          Swal.fire({
-            icon: "error",
-            title: "Login Failed!",
-            text: err.response?.data.message,
-          });
-        });
+
+      Swal.fire({
+        title: "Please Wait...",
+        text: "We're trying to signing you in ^^",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading();
+          postLogin(data)
+            .then((res) => {
+              nav(`${baseUrl}/`);
+              login(res.data.data);
+              Swal.close();
+            }).catch((err) => {
+              Swal.fire({
+                icon: "error",
+                title: "Login Failed!",
+                text: err.response?.data.message,
+              });
+            });
+        }
+      });
     } else {
       Swal.fire({
         icon: "warning",
