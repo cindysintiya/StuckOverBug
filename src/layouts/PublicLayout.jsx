@@ -39,7 +39,7 @@ const PublicLayout = () => {
             {
               showSearch? (
                 <>
-                  <form className="d-flex container-fluid p-0 col my-2">
+                  <form className="d-flex container-fluid p-0 col my-2" onSubmit={(e) => e.preventDefault()}>
                     <input 
                       type="search" 
                       className="form-control me-2" 
@@ -49,7 +49,7 @@ const PublicLayout = () => {
                       value={searchVal}
                       onChange={(e) => setSearchVal(e.target.value)}
                     />
-                    <button className="btn p-1 pt-0" type="submit"><FcSearch size={30} /></button>
+                    <button className="btn p-1 pt-0" type="button"><FcSearch size={30} /></button>
                   </form>
                   <span className="mx-3 mb-2 fs-3 lead text-secondary">|</span>
                 </>
@@ -76,7 +76,7 @@ const PublicLayout = () => {
                       title={`Login as ${loginData.username}`}
                       className="ratio ratio-1x1 bg-danger"
                     >
-                      <ProfilePicture data={loginData.id} />
+                      <ProfilePicture data={loginData} />
                     </Avatar>
                     <button className="btn btn-outline-danger d-sm-block d-none" type="button" onClick={logout}>
                       LOGOUT

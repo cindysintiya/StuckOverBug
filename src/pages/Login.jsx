@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useLogin, useLogout } from "../hooks/useAuth";
+
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import Swal from "sweetalert2";
-import { findUser } from "../utils/DataUsers";
 import { baseUrl } from "../utils/format";
+import { postLogin } from "../utils/DataLogin";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -20,10 +21,14 @@ const Login = () => {
   const logout = useLogout();
   const login = useLogin();
 
+  // const socket = io(apiNode, {
+  //   autoConnect: false,
+  // });
+
   useEffect(() => {
-    // const uname_from_session = sessionStorage.getItem("uname");
-    // setUsername(uname_from_session || "");
-    // sessionStorage.removeItem("uname");
+    const uname_from_session = sessionStorage.getItem("uname");
+    setUsername(uname_from_session || "");
+    sessionStorage.removeItem("uname");
 
     logout();
   }, []);
@@ -33,20 +38,43 @@ const Login = () => {
     const form = document.querySelector(".needs-validation");
     form.classList.add("was-validated");
 
-    const data = findUser(username, password);
+    const data = {
+      username,
+      password
+    };
 
     if (form.checkValidity() == true) {
-      if (data) {
-        nav(`${baseUrl}/`);
-        login(data);
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Login Failed!",
-          text: "Wrong username or password. Please check again",
-          // confirmButtonColor: "#00b6db",
+      // socket.connect();
+
+      // socket.emit("postLogin", data).on("resLogin", (res) => {
+      //   if (res.data) {
+      //     nav(`${baseUrl}/`);
+      //     login(res.data);
+      //   } else {
+      //     Swal.fire({
+      //       icon: "error",
+      //       title: "Login Failed!",
+      //       text: res.message,
+      //     });
+      //   }
+      // });
+
+      // return () => {
+      //   socket.off("resLogin");
+      //   socket.disconnect();
+      // };
+      
+      postLogin(data)
+        .then((res) => {
+          nav(`${baseUrl}/`);
+          login(res.data.data);
+        }).catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Login Failed!",
+            text: err.response?.data.message,
+          });
         });
-      }
     } else {
       Swal.fire({
         icon: "warning",

@@ -5,7 +5,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import Swal from "sweetalert2";
 import { baseUrl } from "../utils/format";
-import { userExist } from "../utils/DataUsers";
+import { postRegister } from "../utils/DataLogin";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -21,40 +21,72 @@ const Register = () => {
 
   const register = useRegister();
 
+  // const socket = io(apiNode, {
+  //   autoConnect: false,
+  // });
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = document.querySelector(".needs-validation");
     form.classList.add("was-validated");
+
+    const data = {
+      username,
+      password,
+      realname,
+      profile,
+      email,
+    };
   
     if (form.checkValidity() === true) {
-      if (userExist(username.trim(), email.trim())) {
-        Swal.fire({
-          icon: "error",
-          title: "Username/ Email Already Exist!",
-          text: "Please use another username or email to register your new account.",
-        })
-      } else if (password === confirmPassword) {
-        register({
-          username,
-          password,
-          realname,
-          profile,
-          email,
-        })
-        Swal.fire({
-          icon: "success",
-          title: "Registration Success!",
-          text: "You can now log in.",
-          confirmButtonText: "LOGIN NOW"
-        }).then(() => {
-          nav(`${baseUrl}/auth/login`);
-        });
-          
-        // Swal.fire({
-        //   icon: "error",
-        //   title: "Registration Failed!",
-        //   text: error.message,
+      if (password === confirmPassword) {
+        // socket.connect();
+  
+        // socket.emit("postRegister", data).on("resRegister", (res) => {
+        //   if (res.data) {
+        //     register(res.data);
+
+        //     Swal.fire({
+        //       icon: "success",
+        //       title: "Registration Success!",
+        //       text: "You can now log in.",
+        //       confirmButtonText: "LOGIN NOW",
+        //     }).then(() => {
+        //       nav(`${baseUrl}/auth/login`);
+        //     });
+        //   } else {
+        //     Swal.fire({
+        //       icon: "error",
+        //       title: "Registration Failed!",
+        //       text: res.message,
+        //     });
+        //   }
         // });
+
+        // return () => {
+        //   socket.off("resRegister");
+        //   socket.disconnect();
+        // };
+
+        postRegister(data)
+          .then((res) => {
+            register(res.data.data);
+
+            Swal.fire({
+              icon: "success",
+              title: "Registration Success!",
+              text: "You can now log in.",
+              confirmButtonText: "LOGIN NOW",
+            }).then(() => {
+              nav(`${baseUrl}/auth/login`);
+            });
+          }).catch((err) => {
+            Swal.fire({
+              icon: "error",
+              title: "Login Failed!",
+              text: err.response?.data.message,
+            });
+          });
       } else {
         Swal.fire({
           icon: "error",

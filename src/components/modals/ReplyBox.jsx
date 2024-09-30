@@ -23,7 +23,7 @@ const ReplyBox = ({ refId, addReply }) => {
       let data = {
         type: "reply",
         ref: refId,
-        author: loginData.id,
+        author: loginData,
         contents: `<p>${answer}</p>`,
         snippets: [],
       };

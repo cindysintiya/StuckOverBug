@@ -41,7 +41,7 @@ const PostThread = () => {
   const [threadPreview, setThreadPreview] = useState({
     id: -1,
     type: "question",
-    author: loginData.id,
+    author: loginData,
     contents: "",
     status: "",
     time: new Date(),

@@ -34,7 +34,7 @@ const DetailThread = () => {
     e.preventDefault();
     if (isLogin) {
       const data = {
-        author: loginData.id,
+        author: loginData,
         ref: id,
         contents: commentBox,
       }

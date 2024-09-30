@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthProvider";
 
-import { users, emptyUser } from "../utils/DataUsers";
+import { emptyUser } from "../utils/DataUsers";
 
 const useLogout = () => {
   const { setIsLogin, setLoginData } = useContext(AuthContext);
@@ -31,11 +31,7 @@ const useLogin = () => {
 
 const useRegister = () => {
   const register = (data) => {
-    users.push({
-      ...data,
-      id: users.length,
-      active: 1,
-    });
+    sessionStorage.setItem("uname", data.username);
   };
 
   return register;

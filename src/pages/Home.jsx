@@ -8,6 +8,9 @@ import { getThreads } from "../utils/DataThreads";
 import ThreadCard from "../components/cards/Thread";
 import BlankPage from "../components/loaders/Blank";
 
+// import { io } from "socket.io-client";
+// import { apiNode } from "../utils/url";
+
 const Home = () => {
   const [data, setData] = useState();
 
@@ -15,12 +18,31 @@ const Home = () => {
 
   const nav = useNavigate();
 
+  // const socket = io(apiNode, {
+  //   autoConnect: false,
+  // });
+
   useEffect(() => {
     setData(
       getThreads()
         .filter((thread) => thread.contents.toLowerCase().includes(searchVal.trim().toLowerCase())
       )
     );
+
+    // socket.connect();
+
+    // socket.on("getAllThreads", (listData) => {
+    //   setData(
+    //     getThreads()
+    //       .filter((thread) => thread.contents.toLowerCase().includes(searchVal.trim().toLowerCase())
+    //     )
+    //   );
+    // })
+
+    // return () => {
+    //   socket.off("resRegister");
+    //   socket.disconnect();
+    // };
   }, [searchVal]);
 
   return (
