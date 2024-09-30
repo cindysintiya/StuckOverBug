@@ -19,9 +19,14 @@ const PublicLayout = () => {
   const { isLogin, loginData } = useContext(AuthContext);
   const logout = useLogout();
   
-  const { showSearch, setShowSearch, searchVal, setSearchVal } = useContext(SearchContext);
+  const { showSearch, setShowSearch, searchVal, setSearchVal, setFilter } = useContext(SearchContext);
 
   const url = useLocation();
+
+  const searchThreads = (e) => {
+    e.preventDefault();
+    setFilter(searchVal);
+  }
 
   useEffect(() => {
     setShowSearch(url.pathname == "/StuckOverBug/");
@@ -39,7 +44,7 @@ const PublicLayout = () => {
             {
               showSearch? (
                 <>
-                  <form className="d-flex container-fluid p-0 col my-2" onSubmit={(e) => e.preventDefault()}>
+                  <form className="d-flex container-fluid p-0 col my-2" onSubmit={searchThreads}>
                     <input 
                       type="search" 
                       className="form-control me-2" 
@@ -47,9 +52,12 @@ const PublicLayout = () => {
                       aria-label="Search" 
                       name="search" 
                       value={searchVal}
-                      onChange={(e) => setSearchVal(e.target.value)}
+                      onChange={(e) => {
+                        setSearchVal(e.target.value);
+                        if (!e.target.value) setFilter("");
+                      }}
                     />
-                    <button className="btn p-1 pt-0" type="button"><FcSearch size={30} /></button>
+                    <button className="btn p-1 pt-0" type="submit"><FcSearch size={30} /></button>
                   </form>
                   <span className="mx-3 mb-2 fs-3 lead text-secondary">|</span>
                 </>

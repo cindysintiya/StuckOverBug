@@ -14,7 +14,7 @@ import BlankPage from "../components/loaders/Blank";
 const Home = () => {
   const [data, setData] = useState();
 
-  const { searchVal } = useContext(SearchContext);
+  const { filter } = useContext(SearchContext);
 
   const nav = useNavigate();
 
@@ -25,7 +25,7 @@ const Home = () => {
   useEffect(() => {
     setData(
       getThreads()
-        .filter((thread) => thread.contents.toLowerCase().includes(searchVal.trim().toLowerCase())
+        .filter((thread) => thread.contents.toLowerCase().includes(filter.trim().toLowerCase())
       )
     );
 
@@ -34,7 +34,7 @@ const Home = () => {
     // socket.on("getAllThreads", (listData) => {
     //   setData(
     //     getThreads()
-    //       .filter((thread) => thread.contents.toLowerCase().includes(searchVal.trim().toLowerCase())
+    //       .filter((thread) => thread.contents.toLowerCase().includes(filter.trim().toLowerCase())
     //     )
     //   );
     // })
@@ -43,7 +43,7 @@ const Home = () => {
     //   socket.off("resRegister");
     //   socket.disconnect();
     // };
-  }, [searchVal]);
+  }, [filter]);
 
   return (
     data? (
@@ -68,7 +68,7 @@ const Home = () => {
       ) : (
         <div className="vh-100 d-flex align-items-center justify-content-center">
           <h5 className="mb-5">
-            Can't find any thread with "{searchVal}" keyword :')
+            Can't find any thread with "{filter}" keyword :')
           </h5>
         </div>
       )
