@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
-import { emptyUser } from "../utils/DataUsers";
+import { emptyUser } from "../utils/format";
 
 const AuthContext = createContext({});
 
@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
 
     if (token) {
       setIsLogin(true);
-      setLoginData(JSON.parse(token));      
+      setLoginData(JSON.parse(token));
     }
   }, []);
 

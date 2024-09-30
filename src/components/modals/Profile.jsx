@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import AuthContext from "../../contexts/AuthProvider";
 import { useLogout } from "../../hooks/useAuth";
-import { emptyUser } from "../../utils/DataUsers";
+import { emptyUser } from "../../utils/format";
 
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 

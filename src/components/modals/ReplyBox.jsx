@@ -38,8 +38,34 @@ const ReplyBox = ({ refId, addReply }) => {
         );
       }
 
-      addReply(postThread(data));
-      document.getElementById("close-reply").click();
+      Swal.fire({
+        title: "Please Wait...",
+        text: "Sending your answer to server.",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading();
+          postThread(data)
+            .then((res) => {
+              document.getElementById("close-reply").click();
+              addReply(res.data.value);
+              Swal.fire({
+                icon: "success",
+                title: "Answer Posted!",
+                text: "Thanks for helping SOBug Asker to solve their problem. Your answer mean so much for them ^^",
+                confirmButtonText: "Absolutely!",
+              });
+            })
+            .catch((err) => {
+              Swal.fire({
+                icon: "error",
+                title: "Failed to Reply!",
+                text: err.response?.data.message || "Something went wrong!",
+              });
+            });
+        }
+      });
     } else {
       Swal.fire({
         icon: "error",

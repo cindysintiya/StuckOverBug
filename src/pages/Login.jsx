@@ -75,9 +75,10 @@ const Login = () => {
           postLogin(data)
             .then((res) => {
               nav(`${baseUrl}/`);
-              login(res.data.data);
+              login(res.data.value);
               Swal.close();
-            }).catch((err) => {
+            })
+            .catch((err) => {
               Swal.fire({
                 icon: "error",
                 title: "Login Failed!",

@@ -68,6 +68,7 @@ const PostThread = () => {
 
       const data = {
         ...threadPreview,
+        author: loginData._id,
         snippets: []
       };
 
@@ -99,8 +100,35 @@ const PostThread = () => {
         );
       }
 
-      postThread(data);
-      nav(`${baseUrl}/`);
+      Swal.fire({
+        title: "Please Wait...",
+        text: "Sending your thread data to server.",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showConfirmButton: false,
+        willOpen: () => {
+          Swal.showLoading();
+          postThread(data)
+            .then((res) => {
+              Swal.fire({
+                icon: "success",
+                title: "Thread Posted!",
+                text: "You can find your thread on Home page and wait for SOBug(s)' reply to solve your bug.",
+                confirmButtonText: "Go to HOME",
+                didClose: () => {
+                  nav(`${baseUrl}/`);
+                }
+              });
+            })
+            .catch((err) => {
+              Swal.fire({
+                icon: "error",
+                title: "Failed to Post!",
+                text: err.response?.data.message || "Something went wrong!",
+              });
+            });
+        }
+      });
     } else {
       Swal.fire({
         icon: "error",

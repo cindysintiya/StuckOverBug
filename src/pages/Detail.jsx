@@ -6,11 +6,13 @@ import { CodeBlock } from "react-code-block";
 import { FaCode } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 
-import { findThread } from "../utils/DataThreads";
+import Swal from "sweetalert2";
+import { closeThread, findThread } from "../utils/DataThreads";
 import { getComments, postComment } from "../utils/DataComments";
+import { emptyComment, emptyThread } from "../utils/format";
 
-import ReplyBox from "../components/modals/ReplyBox";
 import BlankPage from "../components/loaders/Blank";
+import ReplyBox from "../components/modals/ReplyBox";
 import ReplyCard from "../components/cards/Reply";
 import CommentCard from "../components/cards/Comment";
 import ThreadDetailCard from "../components/cards/ThreadDetail";
@@ -38,16 +40,58 @@ const DetailThread = () => {
         ref: id,
         contents: commentBox,
       }
-      setComments([postComment(data), ...comments]);
-      setCommentBox("");
-      document.getElementById("comments-box").scrollTo({ top: 0, behavior: "smooth" });
+
+      postComment(data)
+        .then((res) => {
+          setComments([res.data.value, ...comments]);
+          setCommentBox("");
+          document.getElementById("comments-box").scrollTo({ top: 0, behavior: "smooth" });
+        })
+        .catch((err) => {
+          Swal.fire({
+            icon: "error",
+            title: "Failed!",
+            text: "Can't post your comment.",
+          })
+        });
     }
   }
 
+  const closingThread = () => {
+    Swal.fire({
+      icon: "question",
+      title: "Mark as Closed",
+      text: "Are you sure wanna close this thread? You will no longer receive any reply after closing this.",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Close Thread",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.showLoading();
+        closeThread(id)
+          .then((res) => {
+            setThread({ ...thread, status: res.data.value.status });
+          })
+      }
+    })
+  }
+
   useEffect(() => {
-    setThread(findThread(id).thread);
-    setReplies(findThread(id).replies);
-    setComments(getComments(id));
+    findThread(id)
+      .then((res) => {
+        setThread(res.data.thread);
+        setReplies(res.data.replies);
+        getComments(id)
+          .then((comments) => {
+            setComments(comments.data.value);
+          })
+          .catch((err) => {
+            setComments(emptyComment);
+          });
+      })
+      .catch((err) => {
+        setThread(emptyThread);
+        setReplies(emptyThread);
+      });
   }, []);
 
   return (
@@ -112,15 +156,26 @@ const DetailThread = () => {
             <h4 className="col mb-0">Reply <span className="fs-6 text-secondary">({replies.length})</span></h4>
             <div className="col-auto" title={isLogin? "" : "Please Login for Replying this Thread."}>
               {
-                isLogin && thread.status>0? <>
-                  <button className="btn btn-success pt-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#replyModal">
-                    + New Reply
-                  </button>
-                </> : <>
-                  <button className="btn btn-success pt-1 disabled" disabled>
-                    + New Reply
-                  </button>
-                </>
+                isLogin && thread.status>0? 
+                  loginData._id == thread.author._id? <>
+                    {/* owner */}
+                    <button className="btn btn-success pt-1 shadow-sm me-2" data-bs-toggle="modal" data-bs-target="#replyModal">
+                      + Reply
+                    </button>
+                    <button className="btn btn-danger pt-1 shadow-sm" onClick={closingThread}>
+                      × Mark as Closed
+                    </button>
+                  </> : <>
+                    {/* user */}
+                    <button className="btn btn-success pt-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#replyModal">
+                      + New Reply
+                    </button>
+                  </> : <>
+                    {/* unauthorized/ closed */}
+                    <button className="btn btn-success pt-1 disabled" disabled>
+                      + New Reply
+                    </button>
+                  </>
               }
             </div>
           </div>
@@ -142,15 +197,19 @@ const DetailThread = () => {
           }
           {
             isLogin && thread.status>0? 
-              <ReplyBox refId={id} addReply={addReply}/> : <>
-                <div className="position-relative">
-                  <hr className="border-warning border-3 mt-2 mb-0" />
-                  <hr className="border-warning border-3 my-1" />
-                  <div className="position-absolute top-50 start-50 translate-middle mt-1">
-                    <h6 className="position-relative bg-white px-2 text-nowrap">THREAD CLOSED</h6>
+              <ReplyBox refId={id} addReply={addReply}/>
+                : thread.status? <></> : <>
+                  <div className="position-relative" title="This thread is no longer receiving any Answer.">
+                    <hr className="border-warning border-3 mt-2 mb-0" />
+                    <hr className="border-warning border-3 my-1" />
+                    <div className="position-absolute top-50 start-50 translate-middle mt-1">
+                      <h6 className="position-relative bg-white px-2 text-nowrap">THREAD CLOSED</h6>
+                    </div>
                   </div>
-                </div>
-              </>
+                  <p className="text-center mt-2 mb-4 mb-sm-2 text-secondary">
+                    <span className="fw-semibold">@{thread.author.username}</span> has marked their thread as Closed. This thread was no longer receiving Answer.
+                  </p>
+                </>
           }
         </div>
         {/* COMMENTS */}
@@ -159,16 +218,19 @@ const DetailThread = () => {
             <h6 className="p-3 mb-0 bg-light rounded-top">Comment(s) on this Thread:</h6>
             <div className="overflow-auto overflow-x-hidden p-2 pt-0" id="comments-box" style={{ maxHeight: 280 }}>
               {
-                comments && comments.length? <>
+                comments?
+                  comments.length? <>
                   {
                     comments.map((comment) => {
-                      return <div key={comment.id} className="border-top px-2 pt-2">
+                      return <div key={comment._id} className="border-top px-2 pt-2">
                         <CommentCard data={comment} />
                       </div>
                     })
                   }
                 </> : <>
                   <p className="text-center pt-5 pb-3">No Comment yet...</p>
+                </> : <>
+                  <p className="text-center pt-5 pb-3">Getting Comment(s)...</p>
                 </>
               }
             </div>

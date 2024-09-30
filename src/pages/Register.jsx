@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useAuth";
+
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import Swal from "sweetalert2";
@@ -79,7 +80,7 @@ const Register = () => {
             
             postRegister(data)
               .then((res) => {
-                register(res.data.data);
+                register(res.data.value);
 
                 Swal.fire({
                   icon: "success",
@@ -89,11 +90,12 @@ const Register = () => {
                 }).then(() => {
                   nav(`${baseUrl}/auth/login`);
                 });
-              }).catch((err) => {
+              })
+              .catch((err) => {
                 Swal.fire({
                   icon: "error",
                   title: "Registration Failed!",
-                  text: err.response?.data.message,
+                  text: err.response?.data.message || "Something went wrong!",
                 });
               });
           }
@@ -113,7 +115,6 @@ const Register = () => {
       });
     }
   };
-  
 
   return (
     <>

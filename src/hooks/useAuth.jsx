@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthProvider";
 
-import { emptyUser } from "../utils/DataUsers";
+import { emptyUser } from "../utils/format";
 
 const useLogout = () => {
   const { setIsLogin, setLoginData } = useContext(AuthContext);
