@@ -6,7 +6,7 @@ import { Fab } from "@mui/material";
 
 import { getThreads } from "../utils/DataThreads";
 import ThreadCard from "../components/cards/Thread";
-import BlankPage from "../components/loaders/Blank";
+import Loading from "../components/loaders/Loading";
 
 // import { io } from "socket.io-client";
 // import { apiNode } from "../utils/url";
@@ -80,7 +80,7 @@ const Home = () => {
           </div>
         </>
       )
-    ) : <BlankPage />
+    ) : <Loading />
   )
 }
 

@@ -11,11 +11,11 @@ import { closeThread, findThread } from "../utils/DataThreads";
 import { getComments, postComment } from "../utils/DataComments";
 import { emptyComment, emptyThread } from "../utils/format";
 
-import BlankPage from "../components/loaders/Blank";
 import ReplyBox from "../components/modals/ReplyBox";
 import ReplyCard from "../components/cards/Reply";
 import CommentCard from "../components/cards/Comment";
 import ThreadDetailCard from "../components/cards/ThreadDetail";
+import Loading from "../components/loaders/Loading";
 
 const DetailThread = () => {
   const id = useParams().id;
@@ -257,7 +257,7 @@ const DetailThread = () => {
           </div>
         </div>
       </div>
-    </> : <BlankPage />
+    </> : <Loading />
   )
 }
 
